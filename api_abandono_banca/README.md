@@ -30,13 +30,20 @@ También puedes probar `POST /predict` desde `/docs` con el JSON de ejemplo most
 
 ### URL pública de producción
 
-Pendiente de despliegue: `https://NOMBRE-DE-TU-SERVICIO.onrender.com`
+https://api-abandono-banca.onrender.com
 
-### Verificación obligatoria
+### Uso público
 
-- Interfaz `/`: debe mostrar el formulario y ejecutar una inferencia real.
-- Documentación `/docs`: debe permitir ejecutar `POST /predict`.
-- Captura de pantalla: sustituye este párrafo por `![Inferencia en producción](captura-produccion.png)` cuando tengas la URL activa.
+- Interfaz web: https://api-abandono-banca.onrender.com/
+- Documentación Swagger: https://api-abandono-banca.onrender.com/docs
+- Esquema OpenAPI: https://api-abandono-banca.onrender.com/openapi.json
+- Endpoint de inferencia: `POST https://api-abandono-banca.onrender.com/predict`
+
+### Captura de producción
+
+Añadir aquí una captura tras el despliegue final:
+
+`![Interfaz de producción](captura-produccion.png)`
 
 ## Repositorio GitHub
 

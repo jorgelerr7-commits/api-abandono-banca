@@ -88,17 +88,7 @@ def predecir_abandono(cliente: ClienteInput):
         if hasattr(preprocesador, "feature_names_in_"):
             df_saneado = df_saneado.reindex(columns=list(preprocesador.feature_names_in_))
 
-        bloques = []
-        for nombre, transformador, columnas in preprocesador.transformers_:
-            if nombre == "remainder":
-                continue
-            entrada = df_saneado.loc[:, list(columnas)] if not isinstance(columnas, slice) else df_saneado.iloc[:, columnas]
-            salida = transformador.transform(entrada)
-            if hasattr(salida, "toarray"):
-                salida = salida.toarray()
-            bloques.append(np.asarray(salida))
-
-        X_inferencia = np.hstack([np.atleast_2d(bloque) for bloque in bloques])
+        X_inferencia = preprocesador.transform(df_saneado)
 
         modelo = artefactos["modelo"]
         prediccion_clase = int(modelo.predict(X_inferencia)[0])
@@ -112,13 +102,13 @@ def predecir_abandono(cliente: ClienteInput):
 
         if prob_abandono >= 0.70:
             riesgo = "Alto"
-            accion = "Contacto telefónico prioritario por el gestor de cuentas y oferta de fidelización."
+            accion = "Contacto telefonico prioritario por el gestor de cuentas y oferta de fidelizacion."
         elif prob_abandono >= 0.40:
             riesgo = "Medio"
-            accion = "Envío de encuesta de satisfacción y campaña informativa sobre ventajas en comisiones."
+            accion = "Envio de encuesta de satisfaccion y campaña informativa sobre ventajas en comisiones."
         else:
             riesgo = "Bajo"
-            accion = "Sin acción requerida. Cliente fidelizado."
+            accion = "Sin accion requerida. Cliente fidelizado."
 
         return PrediccionOutput(
             id_cliente=cliente.id_cliente,
