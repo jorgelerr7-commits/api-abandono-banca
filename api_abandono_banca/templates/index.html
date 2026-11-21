@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Predicción de abandono bancario</title>
+  <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body>
+  <main class="container">
+    <header class="hero">
+      <p class="eyebrow">Análisis comercial</p>
+      <h1>Riesgo de abandono</h1>
+      <p>Introduce los datos del cliente para calcular su probabilidad de fuga.</p>
+    </header>
+
+    <section class="grid">
+      <form id="cliente-form" class="card form-card">
+        <h2>Datos del cliente</h2>
+        <label>Código de cliente
+          <input name="id_cliente" value="CLI-8492" required>
+        </label>
+        <div class="field-grid">
+          <label>Edad<input name="edad" type="number" min="0" max="120" value="42" step="1"></label>
+          <label>Ingresos anuales (€)<input name="ingresos_anuales" type="number" min="0" value="52000" step="100"></label>
+          <label>Saldo de cuenta (€)<input name="saldo_cuenta" type="number" value="18500" step="100"></label>
+          <label>Número de productos<input name="num_productos" type="number" min="0" value="3" step="1"></label>
+          <label>Antigüedad (meses)<input name="antiguedad_meses" type="number" min="0" value="36" step="1"></label>
+          <label>Nivel de satisfacción
+            <select name="nivel_satisfaccion"><option value="Medio">Medio</option><option value="Muy Bajo">Muy bajo</option><option value="Bajo">Bajo</option><option value="Alto">Alto</option><option value="Muy Alto">Muy alto</option></select>
+          </label>
+          <label>Tipo de cuenta
+            <select name="tipo_cuenta"><option value="Nomina">Nómina</option><option value="Ahorro">Ahorro</option><option value="Corriente">Corriente</option><option value="Inversion">Inversión</option></select>
+          </label>
+          <label>Nivel de estudios
+            <select name="nivel_estudios"><option value="Grado">Grado universitario</option><option value="Master">Máster</option><option value="Doctorado">Doctorado</option><option value="Secundaria">Secundaria</option><option value="Primaria">Primaria</option></select>
+          </label>
+          <label>Canal preferido
+            <select name="canal_preferido"><option value="App Movil">App móvil</option><option value="Oficina">Oficina</option><option value="Web">Web</option><option value="Telefono">Teléfono</option><option value="Cajero Antiguo">Cajero automático</option></select>
+          </label>
+          <label class="checkbox-label"><input name="tiene_tarjeta" type="checkbox" checked>Tiene tarjeta asociada</label>
+        </div>
+        <button id="submit-button" type="submit">Calcular riesgo</button>
+        <p id="error-message" class="error" role="alert"></p>
+      </form>
+
+      <section id="resultado" class="card result-card" aria-live="polite">
+        <p class="eyebrow">Resultado</p>
+        <div id="empty-state"><div class="pulse"></div><h2>Esperando datos</h2><p>Completa el formulario y calcula el riesgo del cliente.</p></div>
+        <div id="result-content" class="hidden">
+          <span id="risk-badge" class="badge">Riesgo</span>
+          <h2 id="prediction-title">Cliente</h2>
+          <div class="probability"><strong id="probability-value">0%</strong><span>probabilidad de abandono</span></div>
+          <div class="bar"><div id="risk-bar"></div></div>
+          <p id="recommendation"></p>
+        </div>
+      </section>
+    </section>
+  </main>
+  <script src="/static/js/app.js"></script>
+</body>
+</html>
