@@ -3,60 +3,152 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Predicción de abandono bancario</title>
+  <meta name="theme-color" content="#08111f">
+  <title>Nexus Bank · Riesgo de abandono</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/static/css/styles.css">
 </head>
 <body>
-  <main class="container">
-    <header class="hero">
-      <p class="eyebrow">Análisis comercial</p>
-      <h1>Riesgo de abandono</h1>
-      <p>Introduce los datos del cliente para calcular su probabilidad de fuga.</p>
-    </header>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="/" aria-label="Nexus Bank inicio">
+        <span class="brand-mark">N</span>
+        <span>Nexus<span>Bank</span></span>
+      </a>
 
-    <section class="grid">
-      <form id="cliente-form" class="card form-card">
-        <h2>Datos del cliente</h2>
-        <label>Código de cliente
-          <input name="id_cliente" value="CLI-8492" required>
-        </label>
-        <div class="field-grid">
-          <label>Edad<input name="edad" type="number" min="0" max="120" value="42" step="1"></label>
-          <label>Ingresos anuales (€)<input name="ingresos_anuales" type="number" min="0" value="52000" step="100"></label>
-          <label>Saldo de cuenta (€)<input name="saldo_cuenta" type="number" value="18500" step="100"></label>
-          <label>Número de productos<input name="num_productos" type="number" min="0" value="3" step="1"></label>
-          <label>Antigüedad (meses)<input name="antiguedad_meses" type="number" min="0" value="36" step="1"></label>
-          <label>Nivel de satisfacción
-            <select name="nivel_satisfaccion"><option value="Medio">Medio</option><option value="Muy Bajo">Muy bajo</option><option value="Bajo">Bajo</option><option value="Alto">Alto</option><option value="Muy Alto">Muy alto</option></select>
-          </label>
-          <label>Tipo de cuenta
-            <select name="tipo_cuenta"><option value="Nomina">Nómina</option><option value="Ahorro">Ahorro</option><option value="Corriente">Corriente</option><option value="Inversion">Inversión</option></select>
-          </label>
-          <label>Nivel de estudios
-            <select name="nivel_estudios"><option value="Grado">Grado universitario</option><option value="Master">Máster</option><option value="Doctorado">Doctorado</option><option value="Secundaria">Secundaria</option><option value="Primaria">Primaria</option></select>
-          </label>
-          <label>Canal preferido
-            <select name="canal_preferido"><option value="App Movil">App móvil</option><option value="Oficina">Oficina</option><option value="Web">Web</option><option value="Telefono">Teléfono</option><option value="Cajero Antiguo">Cajero automático</option></select>
-          </label>
-          <label class="checkbox-label"><input name="tiene_tarjeta" type="checkbox" checked>Tiene tarjeta asociada</label>
-        </div>
-        <button id="submit-button" type="submit">Calcular riesgo</button>
-        <p id="error-message" class="error" role="alert"></p>
-      </form>
+      <nav class="nav" aria-label="Navegación principal">
+        <a class="nav-item active" href="#analisis">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 3v18h18M7 16l4-4 3 3 6-7"/></svg>
+          <span>Análisis</span>
+        </a>
+        <a class="nav-item" href="/docs">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8zM14 2v6h6M8 13h8M8 17h6"/></svg>
+          <span>API Docs</span>
+        </a>
+      </nav>
 
-      <section id="resultado" class="card result-card" aria-live="polite">
-        <p class="eyebrow">Resultado</p>
-        <div id="empty-state"><div class="pulse"></div><h2>Esperando datos</h2><p>Completa el formulario y calcula el riesgo del cliente.</p></div>
-        <div id="result-content" class="hidden">
-          <span id="risk-badge" class="badge">Riesgo</span>
-          <h2 id="prediction-title">Cliente</h2>
-          <div class="probability"><strong id="probability-value">0%</strong><span>probabilidad de abandono</span></div>
-          <div class="bar"><div id="risk-bar"></div></div>
-          <p id="recommendation"></p>
+      <div class="profile">
+        <div class="avatar">AM</div>
+        <div><strong>Analista</strong><span>Gestión comercial</span></div>
+      </div>
+    </aside>
+
+    <main class="workspace" id="analisis">
+      <header class="topbar">
+        <div>
+          <p class="breadcrumb">Gestión de clientes <span>/</span> Predicción</p>
+          <h1>Evaluación de abandono</h1>
         </div>
-      </section>
-    </section>
-  </main>
+        <div class="status"><span></span> Modelo activo</div>
+      </header>
+
+      <div class="dashboard">
+        <form id="cliente-form" class="form-panel">
+          <div class="panel-heading">
+            <div>
+              <span class="section-label">Cliente a evaluar</span>
+              <h2>Datos financieros y comerciales</h2>
+            </div>
+            <button class="icon-button" id="reset-button" type="button" title="Restablecer formulario" aria-label="Restablecer formulario">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7L3 8M3 3v5h5"/></svg>
+            </button>
+          </div>
+
+          <fieldset>
+            <legend><span>01</span> Identificación</legend>
+            <div class="fields three-columns">
+              <label class="field">Código de cliente
+                <div class="input-wrap"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"/></svg><input name="id_cliente" value="CLI-8492" required></div>
+              </label>
+              <label class="field">Edad
+                <div class="input-wrap"><input name="edad" type="number" min="0" max="120" value="42" step="1"><span class="unit">años</span></div>
+              </label>
+              <label class="field">Antigüedad
+                <div class="input-wrap"><input name="antiguedad_meses" type="number" min="0" value="36" step="1"><span class="unit">meses</span></div>
+              </label>
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend><span>02</span> Perfil financiero</legend>
+            <div class="fields two-columns">
+              <label class="field">Ingresos anuales
+                <div class="input-wrap"><span class="currency">€</span><input name="ingresos_anuales" type="number" min="0" value="52000" step="100"></div>
+              </label>
+              <label class="field">Saldo de cuenta
+                <div class="input-wrap"><span class="currency">€</span><input name="saldo_cuenta" type="number" value="18500" step="100"></div>
+              </label>
+              <label class="field">Número de productos
+                <div class="input-wrap"><input name="num_productos" type="number" min="0" value="3" step="1"><span class="unit">productos</span></div>
+              </label>
+              <label class="field">Nivel de estudios
+                <select name="nivel_estudios"><option value="Grado">Grado universitario</option><option value="Master">Máster</option><option value="Doctorado">Doctorado</option><option value="Secundaria">Secundaria</option><option value="Primaria">Primaria</option></select>
+              </label>
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend><span>03</span> Relación con el banco</legend>
+            <div class="fields three-columns">
+              <label class="field">Tipo de cuenta
+                <select name="tipo_cuenta"><option value="Nomina">Nómina</option><option value="Ahorro">Ahorro</option><option value="Corriente">Corriente</option><option value="Inversion">Inversión</option></select>
+              </label>
+              <label class="field">Satisfacción
+                <select name="nivel_satisfaccion"><option value="Medio">Media</option><option value="Muy Bajo">Muy baja</option><option value="Bajo">Baja</option><option value="Alto">Alta</option><option value="Muy Alto">Muy alta</option></select>
+              </label>
+              <label class="field">Canal preferido
+                <select name="canal_preferido"><option value="App Movil">App móvil</option><option value="Oficina">Oficina</option><option value="Web">Web</option><option value="Telefono">Teléfono</option><option value="Cajero Antiguo">Cajero automático</option></select>
+              </label>
+            </div>
+            <label class="toggle-row">
+              <input name="tiene_tarjeta" type="checkbox" checked>
+              <span class="toggle"><span></span></span>
+              <span><strong>Tarjeta activa</strong><small>El cliente dispone de una tarjeta asociada</small></span>
+            </label>
+          </fieldset>
+
+          <p id="error-message" class="error" role="alert"></p>
+          <button id="submit-button" class="primary-button" type="submit">
+            <span>Calcular probabilidad</span>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </button>
+        </form>
+
+        <aside id="resultado" class="result-panel" aria-live="polite">
+          <div class="result-heading"><span>Resultado del análisis</span><span id="analysis-id">ID —</span></div>
+
+          <div id="empty-state" class="empty-state">
+            <div class="orb"><div class="orb-ring"></div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h4l3-8 4 16 3-8h4"/></svg></div>
+            <h2>Listo para analizar</h2>
+            <p>Completa los datos y calcula el riesgo de abandono del cliente.</p>
+          </div>
+
+          <div id="result-content" class="result-content hidden">
+            <div class="risk-header">
+              <span id="risk-badge" class="risk-badge">Riesgo bajo</span>
+              <span id="prediction-label">Cliente estable</span>
+            </div>
+
+            <div class="score-ring" id="score-ring">
+              <div class="score-inner"><strong id="probability-value">0%</strong><span>probabilidad</span></div>
+            </div>
+
+            <div class="probability-scale">
+              <div class="scale-labels"><span>Bajo</span><span>Medio</span><span>Alto</span></div>
+              <div class="scale-track"><div id="risk-bar" class="scale-marker"></div></div>
+            </div>
+
+            <div class="recommendation">
+              <span>Acción recomendada</span>
+              <p id="recommendation"></p>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </main>
+  </div>
   <script src="/static/js/app.js"></script>
 </body>
 </html>

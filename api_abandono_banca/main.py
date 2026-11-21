@@ -118,7 +118,7 @@ def predecir_abandono(cliente: ClienteInput):
             accion = "Envío de encuesta de satisfacción y campaña informativa sobre ventajas en comisiones."
         else:
             riesgo = "Bajo"
-            accion = "Sin accion requerida. Cliente fidelizado."
+            accion = "Sin acción requerida. Cliente fidelizado."
 
         return PrediccionOutput(
             id_cliente=cliente.id_cliente,
@@ -134,3 +134,8 @@ def predecir_abandono(cliente: ClienteInput):
             status_code=500,
             detail=f"Error durante el procesamiento de la inferencia: {exc}",
         )
+
+
+@app.get("/health", tags=["Sistema"])
+def estado_servicio():
+    return {"estado": "ok", "modelo_cargado": "modelo" in artefactos}
