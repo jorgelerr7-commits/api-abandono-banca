@@ -41,9 +41,9 @@ https://api-abandono-banca.onrender.com
 
 ### Captura de producción
 
-Añadir aquí una captura tras el despliegue final:
+![Inferencia real en la interfaz de riesgo de abandono](captura-produccion.png)
 
-`![Interfaz de producción](captura-produccion.png)`
+Captura obtenida ejecutando el formulario con el cliente `CLI-8492`; el resultado mostrado corresponde a una inferencia real del modelo KNN.
 
 ## Repositorio GitHub
 
