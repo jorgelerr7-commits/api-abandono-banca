@@ -38,6 +38,10 @@ Pendiente de despliegue: `https://NOMBRE-DE-TU-SERVICIO.onrender.com`
 - Documentación `/docs`: debe permitir ejecutar `POST /predict`.
 - Captura de pantalla: sustituye este párrafo por `![Inferencia en producción](captura-produccion.png)` cuando tengas la URL activa.
 
+## Repositorio GitHub
+
+https://github.com/jorgelerr7-commits/api-abandono-banca
+
 ## Artefactos
 
 Los archivos `artifacts/preprocesador_banca.joblib` y `artifacts/modelo_knn.joblib` deben conservarse en el repositorio y no deben modificarse.
